@@ -20,6 +20,8 @@ Les films et les castings sont réels ; les membres, les notes et les visionnage
 
 Le script `filmbox-s2.sql` (séance 2) ajoute une colonne `details` en JSONB sur `films` (durée, pays, langue, tags, Oscar du meilleur film) et supprime les objets créés pendant les missions M9 et M10 pour repartir d'une base propre.
 
+Le script `filmbox-s3.sql` (séance 3) fait grossir `journal` et `films` (100 000 films, 20 000 membres, 2 millions de lignes d'activité) et ne crée volontairement aucun index : c'est l'objet des missions M11 et M12.
+
 ## Mise en place
 
 Prérequis : PostgreSQL et le client `psql`.
@@ -28,9 +30,10 @@ Prérequis : PostgreSQL et le client `psql`.
 createdb filmbox
 psql -d filmbox -f filmbox.sql
 psql -d filmbox -f filmbox-s2.sql   # complément séance 2, à exécuter après filmbox.sql
+psql -d filmbox -f filmbox-s3.sql   # complément séance 3, à exécuter après filmbox-s2.sql
 ```
 
-Les deux scripts sont ré-exécutables : ils suppriment puis recréent leurs objets à chaque chargement.
+Les trois scripts sont ré-exécutables : ils suppriment puis recréent leurs objets à chaque chargement (`filmbox-s3.sql` génère 2 millions de lignes, comptez 20 secondes à 2 minutes).
 
 ## Les missions
 
@@ -48,6 +51,8 @@ Chaque fichier regroupe les énoncés et les réponses (requêtes SQL) d'une sé
 | [`M8-fiche-film-enrichie.md`](M8-fiche-film-enrichie.md) | JSONB & LATERAL | Films de plus de 2h30, Oscars du meilleur film, top 5 des tags, derniers visionnages par membre (LATERAL) |
 | [`M9-vues-et-cache.md`](M9-vues-et-cache.md) | Vues & cache | Vue `v_fiche_film`, vue matérialisée `mv_stats_films`, vue modifiable limitée à la science-fiction |
 | [`M10-note-ponderee.md`](M10-note-ponderee.md) | Fonctions SQL | `duree_texte()`, note pondérée façon IMDb (`note_ponderee()`), compatibilité entre deux membres (`compatibilite()`) |
+| [`M11-diagnostic.md`](M11-diagnostic.md) | Le diagnostic | Mesurer la page profil, la page tendances, l'estimation du planificateur pour la science-fiction |
+| [`M12-defi-optimisation.md`](M12-defi-optimisation.md) | Le défi des 3 requêtes lentes (IA) | Index page profil, réécriture + index tendances, index trigramme recherche de titre, rapport d'optimisation |
 
 ## Structure du dépôt
 
@@ -56,6 +61,7 @@ Chaque fichier regroupe les énoncés et les réponses (requêtes SQL) d'une sé
 ├── README.md
 ├── filmbox.sql              # schéma + données
 ├── filmbox-s2.sql           # complément séance 2 (colonne details en JSONB)
+├── filmbox-s3.sql           # complément séance 3 (volumétrie, sans index)
 ├── M1-prise-en-main.md
 ├── M2-catalogue.md
 ├── M3-profil-membre.md
@@ -65,5 +71,7 @@ Chaque fichier regroupe les énoncés et les réponses (requêtes SQL) d'une sé
 ├── M7-tableau-de-bord.md
 ├── M8-fiche-film-enrichie.md
 ├── M9-vues-et-cache.md
-└── M10-note-ponderee.md
+├── M10-note-ponderee.md
+├── M11-diagnostic.md
+└── M12-defi-optimisation.md
 ```
