@@ -57,6 +57,7 @@ Chaque fichier regroupe les énoncés et les réponses (requêtes SQL) d'une sé
 | [`M11-diagnostic.md`](M11-diagnostic.md) | Le diagnostic | Mesurer la page profil, la page tendances, l'estimation du planificateur pour la science-fiction |
 | [`M12-defi-optimisation.md`](M12-defi-optimisation.md) | Le défi des 3 requêtes lentes (IA) | Index page profil, réécriture + index tendances, index trigramme recherche de titre, rapport d'optimisation |
 | [`M13-publier-une-note.md`](M13-publier-une-note.md) | Procédures | `noter()` (vérification, note ou remplace, journal, moyenne), messages d'erreur clairs, initialisation par lots de `films_stats` (`recalculer_stats()`) |
+| [`M14-statistiques-justes.md`](M14-statistiques-justes.md) | Triggers | Trigger `films_stats` (statistiques toujours à jour), trigger `audit_notes` (notes réellement modifiées, `WHEN`), filet de sécurité (cohérence `films_stats` / `notes`) |
 
 ## Structure du dépôt
 
@@ -79,5 +80,6 @@ Chaque fichier regroupe les énoncés et les réponses (requêtes SQL) d'une sé
 ├── M10-note-ponderee.md
 ├── M11-diagnostic.md
 ├── M12-defi-optimisation.md
-└── M13-publier-une-note.md
+├── M13-publier-une-note.md
+└── M14-statistiques-justes.md
 ```
