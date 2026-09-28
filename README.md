@@ -22,6 +22,8 @@ Le script `filmbox-s2.sql` (séance 2) ajoute une colonne `details` en JSONB sur
 
 Le script `filmbox-s3.sql` (séance 3) fait grossir `journal` et `films` (100 000 films, 20 000 membres, 2 millions de lignes d'activité) et ne crée volontairement aucun index : c'est l'objet des missions M11 et M12.
 
+Le script `filmbox-s4.sql` (séance 4) crée `films_stats` (statistiques dénormalisées) et `audit_notes` (historique des notes modifiées), alimentées par les procédures et triggers des missions M13 et M14.
+
 ## Mise en place
 
 Prérequis : PostgreSQL et le client `psql`.
@@ -31,9 +33,10 @@ createdb filmbox
 psql -d filmbox -f filmbox.sql
 psql -d filmbox -f filmbox-s2.sql   # complément séance 2, à exécuter après filmbox.sql
 psql -d filmbox -f filmbox-s3.sql   # complément séance 3, à exécuter après filmbox-s2.sql
+psql -d filmbox -f filmbox-s4.sql   # complément séance 4, à exécuter après filmbox-s2.sql (inutile de charger filmbox-s3.sql)
 ```
 
-Les trois scripts sont ré-exécutables : ils suppriment puis recréent leurs objets à chaque chargement (`filmbox-s3.sql` génère 2 millions de lignes, comptez 20 secondes à 2 minutes).
+Les quatre scripts sont ré-exécutables : ils suppriment puis recréent leurs objets à chaque chargement (`filmbox-s3.sql` génère 2 millions de lignes, comptez 20 secondes à 2 minutes).
 
 ## Les missions
 
@@ -53,6 +56,7 @@ Chaque fichier regroupe les énoncés et les réponses (requêtes SQL) d'une sé
 | [`M10-note-ponderee.md`](M10-note-ponderee.md) | Fonctions SQL | `duree_texte()`, note pondérée façon IMDb (`note_ponderee()`), compatibilité entre deux membres (`compatibilite()`) |
 | [`M11-diagnostic.md`](M11-diagnostic.md) | Le diagnostic | Mesurer la page profil, la page tendances, l'estimation du planificateur pour la science-fiction |
 | [`M12-defi-optimisation.md`](M12-defi-optimisation.md) | Le défi des 3 requêtes lentes (IA) | Index page profil, réécriture + index tendances, index trigramme recherche de titre, rapport d'optimisation |
+| [`M13-publier-une-note.md`](M13-publier-une-note.md) | Procédures | `noter()` (vérification, note ou remplace, journal, moyenne), messages d'erreur clairs, initialisation par lots de `films_stats` (`recalculer_stats()`) |
 
 ## Structure du dépôt
 
@@ -62,6 +66,7 @@ Chaque fichier regroupe les énoncés et les réponses (requêtes SQL) d'une sé
 ├── filmbox.sql              # schéma + données
 ├── filmbox-s2.sql           # complément séance 2 (colonne details en JSONB)
 ├── filmbox-s3.sql           # complément séance 3 (volumétrie, sans index)
+├── filmbox-s4.sql           # complément séance 4 (films_stats, audit_notes)
 ├── M1-prise-en-main.md
 ├── M2-catalogue.md
 ├── M3-profil-membre.md
@@ -73,5 +78,6 @@ Chaque fichier regroupe les énoncés et les réponses (requêtes SQL) d'une sé
 ├── M9-vues-et-cache.md
 ├── M10-note-ponderee.md
 ├── M11-diagnostic.md
-└── M12-defi-optimisation.md
+├── M12-defi-optimisation.md
+└── M13-publier-une-note.md
 ```
