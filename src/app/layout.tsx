@@ -25,7 +25,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         </main>
         <footer className="pied">
           <div className="conteneur">
-            <p>FilmBox — projet fil rouge PostgreSQL.</p>
+            <p>FilmBox - projet fil rouge PostgreSQL - Elwen COUSSOT</p>
           </div>
         </footer>
       </body>
