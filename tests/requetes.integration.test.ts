@@ -2,6 +2,7 @@
 // On vérifie des valeurs stables : aucun test n'écrit dans la base.
 import { afterAll, describe, expect, it } from 'vitest'
 import { brutContrePondere, longsMetrages, oscars, topParGenre, topTags } from '@/lib/db/classements'
+import { lire } from '@/lib/db/lire'
 import { catalogue, evolutionNotes, fiche, mieuxNotes, rechercher, tendances } from '@/lib/db/films'
 import { carte, derniersVisionnages, plusActifs } from '@/lib/db/membres'
 import { fermerPool } from '@/lib/db/pool'
@@ -106,8 +107,13 @@ describe('classements et statistiques (M5, M7, M8, M10)', () => {
     expect([...parGenre.values()].every((l) => l.length <= 3)).toBe(true)
   })
 
-  it('M10.2 : le rang pondéré ne plante pas sur un film sans note', async () => {
-    expect((await brutContrePondere()).length).toBeGreaterThan(0)
+  it('M10.2 : la version ensembliste donne les valeurs de note_ponderee()', async () => {
+    const top = await brutContrePondere()
+    expect(top).toHaveLength(5)
+    for (const film of top) {
+      const [attendu] = await lire<{ n: number }>(null, 'SELECT note_ponderee($1)::float8 AS n', [film.id])
+      expect(film.note_ponderee).toBeCloseTo(attendu!.n, 2)
+    }
   })
 
   it('M7.3 : le total général égale la somme des sous-totaux par genre', async () => {

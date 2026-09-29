@@ -250,6 +250,7 @@ section > h2 { margin-top: 0; }
 .liste-nue { list-style: none; padding: 0; margin: 0 0 var(--e-4); display: grid; gap: var(--e-2); }
 .aide, .note .aide { color: var(--texte-secondaire); font-size: var(--t-sm); }
 .etoile { color: var(--etoile); }
+.sous-titre { font-family: var(--font-texte), system-ui, sans-serif; font-size: var(--t-base); margin: var(--e-4) 0 var(--e-2); }
 .pastille {
   display: inline-block;
   padding: 0 var(--e-2);
@@ -288,9 +289,7 @@ fieldset { border: 2px solid var(--bordure); border-radius: var(--rayon); paddin
 legend { font-weight: 600; padding-inline: var(--e-2); }
 .notes-saisie { display: flex; flex-wrap: wrap; gap: var(--e-2) var(--e-4); }
 .notes-saisie label { display: inline-flex; align-items: center; gap: var(--e-2); min-height: 2.75rem; padding-right: var(--e-2); }
-.notes-saisie input { width: 1.25rem; height: 1.25rem; }
 .case { display: flex; align-items: center; gap: var(--e-2); min-height: 2.75rem; }
-.case input { width: 1.25rem; height: 1.25rem; }
 
 /* Cartes et grilles */
 .grille { display: grid; gap: var(--e-4); grid-template-columns: repeat(auto-fill, minmax(12rem, 1fr)); list-style: none; padding: 0; margin: 0 0 var(--e-6); }
@@ -301,3 +300,13 @@ legend { font-weight: 600; padding-inline: var(--e-2); }
 .pagination { display: flex; justify-content: space-between; align-items: center; gap: var(--e-4); margin-block: var(--e-6); }
 .deux-colonnes { display: grid; gap: var(--e-8); }
 @media (min-width: 64rem) { .deux-colonnes { grid-template-columns: 1fr 1fr; } }
+
+/* Cibles tactiles ≥ 24 px (WCAG 2.2, 2.5.8) : liens dans les tableaux et l'en-tête, cases et radios */
+td a, th a, .compte a {
+  display: inline-block;
+  padding-block: var(--e-1);
+}
+.notes-saisie input, .case input {
+  width: 1.5rem;
+  height: 1.5rem;
+}

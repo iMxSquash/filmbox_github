@@ -3,15 +3,17 @@
 import { redirect } from 'next/navigation'
 import { z } from 'zod'
 import { urlMembre } from '@/components/Liens'
+import { rechercher } from '@/lib/db/films'
 import { enregistrerSoiree } from '@/lib/db/journal'
 import { messageUtilisateur } from '@/lib/erreurs'
 import { aujourdhui } from '@/lib/format'
+import { MAX_FILMS } from '@/lib/journal'
 import { getSession } from '@/lib/session'
 
 export type EtatSoiree = { erreur?: string }
 
 const saisie = z.object({
-  films: z.array(z.coerce.number().int().positive()).min(1).max(10),
+  films: z.array(z.coerce.number().int().positive()).min(1).max(MAX_FILMS),
   jour: z.iso.date(),
 })
 
@@ -34,4 +36,11 @@ export async function ajouterSoiree(_: EtatSoiree, formulaire: FormData): Promis
     return { erreur: messageUtilisateur(erreur) }
   }
   redirect(urlMembre(session.pseudo))
+}
+
+// Recherche des films à ajouter à la soirée (M16.3) : réservée aux membres connectés
+export async function chercherFilms(texte: string) {
+  if (!(await getSession())) return []
+  const q = texte.trim().slice(0, 100)
+  return q ? rechercher(q) : []
 }

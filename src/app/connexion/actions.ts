@@ -1,6 +1,5 @@
 'use server'
 
-import { headers } from 'next/headers'
 import { redirect } from 'next/navigation'
 import { z } from 'zod'
 import { verifierConnexion } from '@/lib/db/membres'
@@ -26,8 +25,8 @@ export async function connecter(_: EtatConnexion, formulaire: FormData): Promise
   if (!lu.success) return { erreur: 'Renseignez votre pseudo et votre mot de passe.' }
   const { pseudo, motDePasse } = lu.data
 
-  const ip = (await headers()).get('x-forwarded-for')?.split(',')[0]?.trim() ?? 'local'
-  const cle = `${ip}|${pseudo.toLowerCase()}`
+  // Clé = pseudo seul : une IP se falsifie (x-forwarded-for), un pseudo non
+  const cle = pseudo.toLowerCase()
   if (!tentativesAutorisees(cle)) {
     return { pseudo, erreur: 'Trop de tentatives. Réessayez dans quelques minutes.' }
   }

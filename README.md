@@ -59,6 +59,32 @@ Chaque fichier regroupe les énoncés et les réponses (requêtes SQL) d'une sé
 | [`M13-publier-une-note.md`](M13-publier-une-note.md) | Procédures | `noter()` (vérification, note ou remplace, journal, moyenne), messages d'erreur clairs, initialisation par lots de `films_stats` (`recalculer_stats()`) |
 | [`M14-statistiques-justes.md`](M14-statistiques-justes.md) | Triggers | Trigger `films_stats` (statistiques toujours à jour), trigger `audit_notes` (notes réellement modifiées, `WHEN`), filet de sécurité (cohérence `films_stats` / `notes`) |
 
+## Le site FilmBox
+
+Le site (Next.js, TypeScript, `pg` sans ORM) s'appuie sur la base : chaque page correspond à une requête, vue, fonction ou procédure des missions, indiquée en commentaire dans `src/lib/db/`.
+
+Prérequis : Docker, Node.js 22 ou plus.
+
+```bash
+cp .env.example .env            # changer les mots de passe ; SESSION_SECRET : openssl rand -base64 48
+docker compose up -d --wait     # PostgreSQL 18 sur le port 5433, migrations db/migrations/ jouées au 1er démarrage
+npm install
+npm run dev                     # http://localhost:3000
+```
+
+Connexion de démonstration : n'importe quel membre fictif (`lea.reel`, `nolanfan`, `cinephile_92`…), mot de passe `filmbox-demo` (développement uniquement).
+
+| Commande | Rôle |
+| --- | --- |
+| `docker compose down -v && docker compose up -d --wait` | Repartir d'une base neuve (les migrations ne se rejouent que sur un volume vide) |
+| `docker compose exec -T db psql -U postgres -d filmbox -f /seeds/volume.sql` | Charger le volume de la séance 3 (100 000 films, 2 millions de lignes, ~30 s) |
+| `npm run typecheck && npm run lint && npm test` | Vérifications (les tests d'intégration exigent la base Docker) |
+| `npm run build && npm start` | Version de production |
+
+Les migrations reproduisent les réponses des missions : 001 à 013 (schéma, données, vues, fonctions, index, procédures, triggers, sécurité), puis 014 à 019 pour le site (authentification, droits de l'application, recherche avec `id`, index sur les notes, temps de connexion constant, RLS sur les notes). L'application se connecte avec `filmbox_web`, jamais avec `postgres`.
+
+Charte graphique et contrastes vérifiés : [`docs/charte-graphique.md`](docs/charte-graphique.md).
+
 ## Structure du dépôt
 
 ```
@@ -68,6 +94,13 @@ Chaque fichier regroupe les énoncés et les réponses (requêtes SQL) d'une sé
 ├── filmbox-s2.sql           # complément séance 2 (colonne details en JSONB)
 ├── filmbox-s3.sql           # complément séance 3 (volumétrie, sans index)
 ├── filmbox-s4.sql           # complément séance 4 (films_stats, audit_notes)
+├── filmbox-s5.sql           # complément séance 5 (nb_vues, journal privé)
+├── docker-compose.yml       # PostgreSQL 18
+├── db/migrations/           # migrations jouées au démarrage du conteneur
+├── db/seeds/volume.sql      # volume de test optionnel
+├── docs/charte-graphique.md
+├── src/                     # le site (pages, composants, requêtes)
+├── tests/                   # Vitest (unitaires et intégration)
 ├── M1-prise-en-main.md
 ├── M2-catalogue.md
 ├── M3-profil-membre.md

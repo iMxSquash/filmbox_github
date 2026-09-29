@@ -1,8 +1,10 @@
 import 'server-only'
 import { lire } from '@/lib/db/lire'
 
-// M10.2 — 5 premiers selon la moyenne brute et selon la note pondérée (films sans note exclus :
-// note_ponderee() lève une exception s'ils n'en ont aucune)
+// M10.2 — 5 premiers selon la moyenne brute et selon la note pondérée.
+// Version ensembliste de note_ponderee() (même formule, m = 5) : une seule passe sur `notes`,
+// là où l'appel de la fonction pour chaque film relit toute la table (64 ms × 100 000 films).
+// Un test vérifie que les valeurs sont celles de note_ponderee().
 export function brutContrePondere() {
   return lire<{
     id: number
@@ -14,12 +16,22 @@ export function brutContrePondere() {
     rang_pondere: number
   }>(
     null,
-    `SELECT id, titre, nb_notes::int AS nb_notes, moyenne::float8 AS moyenne,
-            RANK() OVER (ORDER BY moyenne DESC)::int AS rang_brut,
-            np::float8 AS note_ponderee,
-            RANK() OVER (ORDER BY np DESC)::int AS rang_pondere
-     FROM (SELECT v.*, note_ponderee(v.id) AS np FROM v_fiche_film v WHERE v.nb_notes > 0) t
-     ORDER BY rang_pondere, titre
+    `WITH globale AS (
+         SELECT AVG(note) AS c FROM notes
+     ),
+     scores AS (
+         SELECT n.film_id, COUNT(*) AS v, ROUND(AVG(n.note), 2) AS moyenne,
+                ROUND((COUNT(*)::NUMERIC / (COUNT(*) + 5)) * AVG(n.note)
+                      + (5::NUMERIC / (COUNT(*) + 5)) * g.c, 2) AS ponderee
+         FROM notes n CROSS JOIN globale g
+         GROUP BY n.film_id, g.c
+     )
+     SELECT f.id, f.titre, s.v::int AS nb_notes, s.moyenne::float8 AS moyenne,
+            RANK() OVER (ORDER BY s.moyenne DESC)::int AS rang_brut,
+            s.ponderee::float8 AS note_ponderee,
+            RANK() OVER (ORDER BY s.ponderee DESC)::int AS rang_pondere
+     FROM scores s JOIN films f ON f.id = s.film_id
+     ORDER BY rang_pondere, f.titre
      LIMIT 5`,
   )
 }

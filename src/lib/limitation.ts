@@ -1,5 +1,6 @@
-// Limitation des tentatives de connexion, au mieux : en mémoire, donc valable pour une seule
-// instance (rechargée au redémarrage). Une limitation partagée relèverait de la base.
+// Limitation des tentatives de connexion par pseudo, au mieux : en mémoire, donc valable pour
+// une seule instance (remise à zéro au redémarrage). Compromis assumé : un tiers peut bloquer
+// un pseudo pendant 15 minutes, mais ne peut pas contourner la limite en changeant d'en-tête.
 
 const MAX_ECHECS = 5
 const FENETRE_MS = 15 * 60 * 1000

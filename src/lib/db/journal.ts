@@ -21,13 +21,6 @@ export function aVoir(membreId: number) {
   )
 }
 
-export function choixDeFilms() {
-  return lire<{ id: number; titre: string; annee: number }>(
-    null,
-    'SELECT id, titre, annee FROM films ORDER BY titre, annee LIMIT 300',
-  )
-}
-
 // M15.3 — la soirée est enregistrée entièrement ou pas du tout : une seule transaction,
 // la première erreur (film inexistant, RLS) annule tout
 export function enregistrerSoiree(membreId: number, filmIds: number[], jour: string, prive: boolean) {
