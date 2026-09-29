@@ -92,6 +92,49 @@ describe('RLS sur les notes (migration 019)', () => {
   })
 })
 
+// Exécute fn dans une transaction toujours annulée : aucun compte de test ne reste en base
+async function sansTrace(fn: (c: PoolClient) => Promise<void>) {
+  await enTransaction(null, async (c) => {
+    await fn(c)
+    throw new Error('annulation')
+  }).catch((e: unknown) => {
+    if ((e as Error).message !== 'annulation') throw e
+  })
+}
+
+describe('inscription() (migration 021)', () => {
+  it('crée le membre, qui peut ensuite se connecter', async () => {
+    await sansTrace(async (c) => {
+      const cree = await c.query('SELECT id, pseudo FROM inscription($1, $2)', ['Test.Inscription', 'motdepasse1'])
+      expect(cree.rows[0]).toMatchObject({ pseudo: 'Test.Inscription' })
+      const connexion = await c.query('SELECT pseudo FROM connexion($1, $2)', ['Test.Inscription', 'motdepasse1'])
+      expect(connexion.rows).toHaveLength(1)
+      const mauvais = await c.query('SELECT pseudo FROM connexion($1, $2)', ['Test.Inscription', 'autre-mot-de-passe'])
+      expect(mauvais.rows).toHaveLength(0)
+    })
+  })
+
+  it.each([
+    ['LEA.REEL', 'motdepasse1', 'Ce pseudo est déjà pris.'],
+    ['ab', 'motdepasse1', 'Le pseudo doit contenir de 3 à 30 caractères, sans espace.'],
+    ['avec espace', 'motdepasse1', 'Le pseudo doit contenir de 3 à 30 caractères, sans espace.'],
+    ['assez.long', 'court', 'Le mot de passe doit contenir de 8 à 72 caractères.'],
+    ['assez.long', 'é'.repeat(40), 'Le mot de passe doit contenir de 8 à 72 caractères.'],
+  ])('refuse %s / %s', async (pseudo, mdp, message) => {
+    const erreur = await sansTrace((c) => c.query('SELECT * FROM inscription($1, $2)', [pseudo, mdp]).then(() => undefined)).catch(
+      (e: unknown) => e,
+    )
+    expect(messageUtilisateur(erreur)).toBe(message)
+  })
+
+  it("l'application ne peut pas créer un membre en écrivant directement dans utilisateurs", async () => {
+    const erreur = await enTransaction(null, (c) =>
+      c.query("INSERT INTO utilisateurs (pseudo, inscrit_le) VALUES ('direct', CURRENT_DATE)"),
+    ).catch((e: unknown) => e)
+    expect(erreur).toMatchObject({ code: '42501' })
+  })
+})
+
 describe('connexion() (migration 014)', () => {
   it('accepte le bon mot de passe', async () => {
     expect(await verifierConnexion('lea.reel', 'filmbox-demo')).toEqual({ membreId: 5, pseudo: 'lea.reel' })

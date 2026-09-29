@@ -57,7 +57,10 @@ export async function EnTete() {
               </form>
             </>
           ) : (
-            <NavLien href="/connexion">Se connecter</NavLien>
+            <>
+              <NavLien href="/connexion">Se connecter</NavLien>
+              <NavLien href="/inscription">Créer un compte</NavLien>
+            </>
           )}
         </div>
       </div>

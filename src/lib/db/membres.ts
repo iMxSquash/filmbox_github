@@ -3,6 +3,18 @@ import { lire } from '@/lib/db/lire'
 import { enTransaction } from '@/lib/db/pool'
 import type { Session } from '@/lib/session'
 
+// Migration 021 : inscription() valide, hache le mot de passe et crée le membre.
+// Les règles (longueurs, pseudo déjà pris) sont dans la base ; ses messages arrivent tels quels.
+export async function creerCompte(pseudo: string, motDePasse: string): Promise<Session> {
+  return enTransaction(null, async (client) => {
+    const { rows } = await client.query<Session>('SELECT id AS "membreId", pseudo FROM inscription($1, $2)', [
+      pseudo,
+      motDePasse,
+    ])
+    return rows[0]!
+  })
+}
+
 // Migration 014 : connexion() est la seule porte, l'empreinte n'est jamais lue par l'application.
 export async function verifierConnexion(pseudo: string, motDePasse: string): Promise<Session | null> {
   return enTransaction(null, async (client) => {

@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import Link from 'next/link'
 import { redirect } from 'next/navigation'
 import { FormulaireConnexion } from '@/app/connexion/FormulaireConnexion'
 import { getSession } from '@/lib/session'
@@ -12,6 +13,9 @@ export default async function PageConnexion() {
     <>
       <h1>Connexion</h1>
       <FormulaireConnexion />
+      <p>
+        Pas encore de compte ? <Link href="/inscription">Créer un compte</Link>
+      </p>
     </>
   )
 }

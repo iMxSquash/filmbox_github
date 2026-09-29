@@ -72,7 +72,7 @@ npm install
 npm run dev                     # http://localhost:3000
 ```
 
-Connexion de démonstration : n'importe quel membre fictif (`lea.reel`, `nolanfan`, `cinephile_92`…), mot de passe `filmbox-demo` (développement uniquement).
+Connexion de démonstration : n'importe quel membre fictif (`lea.reel`, `nolanfan`, `cinephile_92`…), mot de passe `filmbox-demo` (développement uniquement). On peut aussi créer un compte depuis `/inscription`.
 
 | Commande | Rôle |
 | --- | --- |
@@ -81,7 +81,7 @@ Connexion de démonstration : n'importe quel membre fictif (`lea.reel`, `nolanfa
 | `npm run typecheck && npm run lint && npm test` | Vérifications (les tests d'intégration exigent la base Docker) |
 | `npm run build && npm start` | Version de production |
 
-Les migrations reproduisent les réponses des missions : 001 à 013 (schéma, données, vues, fonctions, index, procédures, triggers, sécurité), puis 014 à 019 pour le site (authentification, droits de l'application, recherche avec `id`, index sur les notes, temps de connexion constant, RLS sur les notes). L'application se connecte avec `filmbox_web`, jamais avec `postgres`.
+Les migrations reproduisent les réponses des missions : 001 à 013 (schéma, données, vues, fonctions, index, procédures, triggers, sécurité), puis 014 à 021 pour le site (authentification, droits de l'application, recherche avec `id`, index sur les notes, temps de connexion constant, RLS sur les notes, règle de date du journal, création de compte). L'application se connecte avec `filmbox_web`, jamais avec `postgres`.
 
 Charte graphique et contrastes vérifiés : [`docs/charte-graphique.md`](docs/charte-graphique.md).
 
