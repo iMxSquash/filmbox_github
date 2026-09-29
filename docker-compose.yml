@@ -1,0 +1,24 @@
+services:
+  db:
+    image: postgres:18-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-filmbox}
+      POSTGRES_USER: ${POSTGRES_USER:-postgres}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?POSTGRES_PASSWORD manquant dans .env}
+      FILMBOX_APP_USER: ${FILMBOX_APP_USER:-filmbox_web}
+      FILMBOX_APP_PASSWORD: ${FILMBOX_APP_PASSWORD:?FILMBOX_APP_PASSWORD manquant dans .env}
+    ports:
+      - "127.0.0.1:${DB_PORT:-5433}:5432"   # local uniquement ; 5432 est pris par le PostgreSQL du cours
+    volumes:
+      - pgdata:/var/lib/postgresql
+      - ./db/migrations:/docker-entrypoint-initdb.d:ro   # exécutées dans l'ordre, au premier démarrage uniquement
+      - ./db/seeds:/seeds:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+volumes:
+  pgdata:
