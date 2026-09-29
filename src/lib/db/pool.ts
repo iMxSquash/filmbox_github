@@ -1,5 +1,5 @@
 import 'server-only'
-import { Pool, type PoolClient } from 'pg'
+import { Pool, type PoolClient, type QueryResultRow } from 'pg'
 import { env } from '@/lib/env'
 
 // Un seul pool, conservé entre les rechargements à chaud du mode dev.
@@ -37,6 +37,11 @@ export async function enTransaction<T>(
   } finally {
     client.release()
   }
+}
+
+// Lecture publique : une requête, sans transaction. Sans app.membre_id posé, la RLS voit un visiteur.
+export async function requete<T extends QueryResultRow>(sql: string, params: unknown[]): Promise<T[]> {
+  return (await pool().query<T>(sql, params)).rows
 }
 
 export async function fermerPool(): Promise<void> {

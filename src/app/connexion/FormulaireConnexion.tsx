@@ -1,6 +1,7 @@
 'use client'
 
 import { useActionState } from 'react'
+import { Message } from '@/components/Message'
 import { connecter, type EtatConnexion } from '@/app/connexion/actions'
 
 export function FormulaireConnexion() {
@@ -10,10 +11,9 @@ export function FormulaireConnexion() {
   return (
     <form action={action} className="formulaire" noValidate>
       {invalide && (
-        <p id="erreur-connexion" role="alert" className="message message-erreur">
-          <span aria-hidden="true">⚠</span>
-          <span>{etat.erreur}</span>
-        </p>
+        <Message type="erreur" id="erreur-connexion">
+          {etat.erreur}
+        </Message>
       )}
       <div className="champ">
         <label htmlFor="pseudo">Pseudo</label>

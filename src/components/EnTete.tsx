@@ -2,6 +2,23 @@ import Link from 'next/link'
 import { deconnecter } from '@/app/connexion/actions'
 import { NavLien } from '@/components/NavLien'
 import { getSession } from '@/lib/session'
+import { LienMembre } from '@/components/Liens'
+
+const LIENS = [
+  { href: '/', titre: 'Accueil' },
+  { href: '/films', titre: 'Films' },
+  { href: '/recherche', titre: 'Recherche' },
+  { href: '/sagas', titre: 'Sagas' },
+  { href: '/classements', titre: 'Classements' },
+  { href: '/statistiques', titre: 'Statistiques' },
+  { href: '/membres', titre: 'Membres' },
+  { href: '/kevin-bacon', titre: 'Kevin Bacon' },
+]
+
+const LIENS_MEMBRE = [
+  { href: '/moi/a-voir', titre: 'À voir' },
+  { href: '/moi/journal/nouveau', titre: 'Ajouter des visionnages' },
+]
 
 export async function EnTete() {
   const session = await getSession()
@@ -14,16 +31,24 @@ export async function EnTete() {
         </Link>
         <nav className="navigation" aria-label="Navigation principale">
           <ul>
-            <li>
-              <NavLien href="/">Accueil</NavLien>
-            </li>
+            {LIENS.map((l) => (
+              <li key={l.href}>
+                <NavLien href={l.href}>{l.titre}</NavLien>
+              </li>
+            ))}
+            {session &&
+              LIENS_MEMBRE.map((l) => (
+                <li key={l.href}>
+                  <NavLien href={l.href}>{l.titre}</NavLien>
+                </li>
+              ))}
           </ul>
         </nav>
         <div className="compte">
           {session ? (
             <>
               <span>
-                Connecté : <strong>{session.pseudo}</strong>
+                Connecté : <LienMembre pseudo={session.pseudo} />
               </span>
               <form action={deconnecter}>
                 <button type="submit" className="bouton bouton-secondaire">
