@@ -18,7 +18,6 @@ SELECT TO_CHAR(mois, 'YYYY-MM') AS mois, nb, SUM(nb) OVER (ORDER BY mois) AS cum
 FROM par_mois
 ORDER BY mois;
 ```
-</details>
 
 ## M6.2 La note d'*Inception* au fil du temps
 
@@ -38,7 +37,6 @@ JOIN utilisateurs u ON u.id = n.utilisateur_id
 WHERE f.titre = 'Inception'
 ORDER BY n.note_le;
 ```
-</details>
 
 ## M6.3 Plus sévère que la moyenne ?
 
@@ -57,7 +55,6 @@ FROM (
 WHERE pseudo = 'nolanfan'
 ORDER BY ecart DESC, titre;
 ```
-</details>
 
 ## M6.4 Le rythme de visionnage
 
@@ -74,4 +71,3 @@ JOIN films f ON f.id = j.film_id
 WHERE u.pseudo = 'cinephile_92'
 ORDER BY j.date_visionnage, j.id;
 ```
-</details>

@@ -12,7 +12,6 @@ FROM films
 WHERE annee BETWEEN 2000 AND 2010
 ORDER BY annee, titre;
 ```
-</details>
 
 ## M2.2 La filmographie de Kevin Bacon
 
@@ -28,7 +27,6 @@ JOIN films f ON f.id = c.film_id
 WHERE p.nom = 'Kevin Bacon' AND c.role = 'acteur'
 ORDER BY f.annee;
 ```
-</details>
 
 ## M2.3 Les réalisateurs prolifiques
 
@@ -45,7 +43,6 @@ GROUP BY p.nom
 HAVING COUNT(*) >= 2
 ORDER BY nb_films DESC, p.nom;
 ```
-</details>
 
 ## M2.4 Les mieux notés
 
@@ -62,7 +59,6 @@ HAVING COUNT(*) >= 5
 ORDER BY moyenne DESC, f.titre
 LIMIT 5;
 ```
-</details>
 
 ## M2.5 Les membres les plus actifs
 
@@ -77,4 +73,3 @@ JOIN utilisateurs u ON u.id = j.utilisateur_id
 GROUP BY u.pseudo
 ORDER BY nb_visionnages DESC, u.pseudo;
 ```
-</details>

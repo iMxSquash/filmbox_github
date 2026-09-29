@@ -45,7 +45,6 @@ CALL noter('bobine', 'The Artist', 5);
 ```sql
 SELECT f.titre, s.nb_notes, s.moyenne FROM films_stats s JOIN films f ON f.id = s.film_id WHERE f.titre = 'The Artist';
 ```
-</details>
 
 ## M14.2 Journaliser les notes réellement modifiées
 
@@ -83,7 +82,6 @@ FROM audit_notes a
 JOIN utilisateurs u ON u.id = a.utilisateur_id
 JOIN films f ON f.id = a.film_id;
 ```
-</details>
 
 ## M14.3 Le filet de sécurité
 
@@ -98,4 +96,3 @@ JOIN (SELECT film_id, COUNT(*) AS nb, ROUND(AVG(note), 2) AS moy
       FROM notes GROUP BY film_id) n ON n.film_id = s.film_id
 WHERE s.nb_notes <> n.nb OR s.moyenne <> n.moy;
 ```
-</details>

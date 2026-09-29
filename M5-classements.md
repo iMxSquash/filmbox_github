@@ -23,7 +23,6 @@ FROM classes
 WHERE rang <= 3
 ORDER BY genre, rang;
 ```
-</details>
 
 ## M5.2 Le classement des réalisateurs
 
@@ -45,7 +44,6 @@ FROM moyennes
 ORDER BY rang, realisateur
 LIMIT 10;
 ```
-</details>
 
 ## M5.3 Le coup de cœur de chacun
 
@@ -64,7 +62,6 @@ FROM (
 WHERE rn = 1
 ORDER BY pseudo;
 ```
-</details>
 
 ## M5.4 Le meilleur épisode
 
@@ -80,4 +77,3 @@ JOIN notes n ON n.film_id = f.id
 GROUP BY s.id, s.nom, f.titre
 ORDER BY saga, rang_dans_saga;
 ```
-</details>

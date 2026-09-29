@@ -34,7 +34,6 @@ coup_de_coeur AS (
 SELECT m.pseudo, s.nb_films_notes, s.note_moyenne, g.genre AS genre_prefere, c.titre AS coup_de_coeur
 FROM membre m, stats s, genre_prefere g, coup_de_coeur c;
 ```
-</details>
 
 ## M3.2 À voir ensuite
 
@@ -55,7 +54,6 @@ LEFT JOIN deja_vus v ON v.film_id = f.id
 WHERE v.film_id IS NULL
 ORDER BY f.annee DESC;
 ```
-</details>
 
 ## M3.3 Les films qui divisent
 
@@ -76,4 +74,3 @@ JOIN films f ON f.id = e.film_id
 ORDER BY e.ecart DESC, f.titre
 LIMIT 5;
 ```
-</details>

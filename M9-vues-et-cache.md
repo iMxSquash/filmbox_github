@@ -39,7 +39,6 @@ FROM v_fiche_film
 WHERE genre = 'Science-fiction'
 ORDER BY moyenne DESC;
 ```
-</details>
 
 ## M9.2 Le cache des statistiques
 
@@ -78,7 +77,6 @@ SELECT f.titre, s.nb_notes, s.moyenne
 FROM mv_stats_films s JOIN films f ON f.id = s.film_id
 WHERE f.titre = 'Inception';
 ```
-</details>
 
 ## M9.3 Une vue modifiable limitée à la science-fiction
 
@@ -99,4 +97,3 @@ UPDATE v_films_sf
 SET genre = 'Action'
 WHERE titre = 'Inception';
 ```
-</details>

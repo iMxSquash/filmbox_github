@@ -27,7 +27,6 @@ FROM films
 ORDER BY (details ->> 'duree')::INTEGER DESC
 LIMIT 3;
 ```
-</details>
 
 ## M10.2 La note pondérée façon IMDb
 
@@ -69,7 +68,6 @@ FROM v_fiche_film
 ORDER BY rang_pondere
 LIMIT 5;
 ```
-</details>
 
 ## M10.3 La compatibilité entre deux membres
 
@@ -101,4 +99,3 @@ SELECT * FROM compatibilite('cinephile_92', 'nolanfan') LIMIT 5;
 SELECT COUNT(*) AS films_communs, ROUND(AVG(ecart), 2) AS ecart_moyen
 FROM compatibilite('cinephile_92', 'nolanfan');
 ```
-</details>

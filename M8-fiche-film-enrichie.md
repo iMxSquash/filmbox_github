@@ -18,7 +18,6 @@ FROM films
 WHERE (details ->> 'duree')::INTEGER > 150
 ORDER BY duree_min DESC;
 ```
-</details>
 
 ## M8.2 Les Oscars du meilleur film
 
@@ -34,7 +33,6 @@ JOIN personnes p ON p.id = c.personne_id
 WHERE f.details @> '{"oscar_meilleur_film": true}'
 ORDER BY f.annee;
 ```
-</details>
 
 ## M8.3 Le top 5 des tags
 
@@ -50,7 +48,6 @@ GROUP BY t.tag
 ORDER BY nb_films DESC, t.tag
 LIMIT 5;
 ```
-</details>
 
 ## M8.4 Les 2 derniers visionnages de chaque membre
 
@@ -71,4 +68,3 @@ CROSS JOIN LATERAL (
 ) d
 ORDER BY u.pseudo, d.date_visionnage DESC;
 ```
-</details>

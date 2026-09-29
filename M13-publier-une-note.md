@@ -42,7 +42,6 @@ $$;
 ```sql
 CALL noter('lea.reel', 'Inception', 3.5);
 ```
-</details>
 
 ## M13.2 Des messages compréhensibles
 
@@ -57,7 +56,6 @@ CALL noter('lea.reel', 'Inception', 6);
 ```sql
 CALL noter('lea.reel', 'Avatar', 4);
 ```
-</details>
 
 ## M13.3 Initialiser les statistiques par lots
 
@@ -97,4 +95,3 @@ CALL recalculer_stats(10);
 ```sql
 SELECT COUNT(*) AS films_avec_stats FROM films_stats;
 ```
-</details>

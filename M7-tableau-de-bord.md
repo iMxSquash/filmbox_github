@@ -27,7 +27,6 @@ JOIN films f ON f.id = n.film_id
 GROUP BY f.genre
 ORDER BY nb_notes DESC, f.genre;
 ```
-</details>
 
 ## M7.2 La SF vue par chaque membre
 
@@ -45,7 +44,6 @@ JOIN utilisateurs u ON u.id = n.utilisateur_id
 GROUP BY u.pseudo
 ORDER BY moyenne_sf DESC NULLS LAST, u.pseudo;
 ```
-</details>
 
 
 ## M7.3 Visionnages par genre et par trimestre
@@ -66,4 +64,3 @@ FROM (
 GROUP BY ROLLUP (genre, trimestre)
 ORDER BY GROUPING(genre), genre, GROUPING(trimestre), trimestre;
 ```
-</details>

@@ -20,7 +20,6 @@ WITH RECURSIVE episodes AS (
 )
 SELECT episode, titre, annee FROM episodes ORDER BY episode;
 ```
-</details>
 
 ## M4.2 Toutes les sagas
 
@@ -43,7 +42,6 @@ FROM episodes e
 JOIN sagas s ON s.id = e.saga_id
 ORDER BY s.nom, e.episode;
 ```
-</details>
 
 ## M4.3 Le nombre de Kevin Bacon
 
@@ -70,7 +68,6 @@ GROUP BY p.nom
 ORDER BY nombre_de_bacon DESC, p.nom
 LIMIT 8;
 ```
-</details>
 
 ## M4.4 D'Omar Sy à Kevin Bacon
 
@@ -98,7 +95,6 @@ WHERE personne_id = (SELECT id FROM personnes WHERE nom = 'Omar Sy')
 ORDER BY degre, chemin
 LIMIT 1;
 ```
-</details>
 
 ## M4.5 Les inaccessibles
 
@@ -122,4 +118,3 @@ WHERE c.role = 'acteur'
   AND c.personne_id NOT IN (SELECT personne_id FROM atteints)
 ORDER BY p.nom;
 ```
-</details>

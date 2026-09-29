@@ -27,7 +27,6 @@ CREATE TABLE listes (
     creee_le DATE NOT NULL DEFAULT CURRENT_DATE
 );
 ```
-</details>
 
 ## M1.3 Le contenu des listes
 
@@ -43,7 +42,6 @@ CREATE TABLE liste_films (
     PRIMARY KEY (liste_id, film_id)
 );
 ```
-</details>
 
 ## M1.4 Le top Nolan
 
@@ -73,4 +71,3 @@ JOIN liste_films lf ON lf.liste_id = l.id
 JOIN films f ON f.id = lf.film_id
 ORDER BY lf.position;
 ```
-</details>

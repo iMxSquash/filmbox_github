@@ -26,7 +26,6 @@ WHERE j.utilisateur_id = (SELECT id FROM utilisateurs WHERE pseudo = 'membre_424
 ORDER BY j.date_visionnage DESC
 LIMIT 20;
 ```
-</details>
 
 ## M11.2 La page « Tendances »
 
@@ -43,7 +42,6 @@ GROUP BY j.film_id
 ORDER BY vues DESC
 LIMIT 5;
 ```
-</details>
 
 ## M11.3 L'estimation du planificateur
 
@@ -61,4 +59,3 @@ SELECT most_common_vals, most_common_freqs
 FROM pg_stats
 WHERE tablename = 'films' AND attname = 'genre';
 ```
-</details>
