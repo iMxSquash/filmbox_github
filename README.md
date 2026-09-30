@@ -77,7 +77,7 @@ npm install
 npm run dev                     # http://localhost:3000
 ```
 
-Connexion de démonstration : n'importe quel membre fictif (`lea.reel`, `nolanfan`, `cinephile_92`…), mot de passe `filmbox-demo` (développement uniquement). On peut aussi créer un compte depuis `/inscription`.
+Connexion de démonstration : n'importe quel membre fictif (`lea.reel`, `nolanfan`, `cinephile_92`…), mot de passe `filmbox-demo` (développement uniquement). On peut aussi créer un compte depuis `/inscription`. L'interrupteur « Diagrammes » de l'en-tête remplace les tableaux à une seule série de valeurs par des diagrammes à barres.
 
 | Commande | Rôle |
 | --- | --- |

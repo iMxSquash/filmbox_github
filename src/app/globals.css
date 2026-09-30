@@ -310,3 +310,49 @@ td a, th a, .compte a {
   width: 1.5rem;
   height: 1.5rem;
 }
+
+/* Interrupteur tableaux / diagrammes (bouton role="switch") */
+.bascule {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--e-2);
+  min-height: 2.75rem;
+  padding: 0 var(--e-2);
+  border: 0;
+  background: transparent;
+  color: var(--texte);
+  font: inherit;
+  cursor: pointer;
+}
+.bascule-piste {
+  position: relative;
+  width: 2.75rem;
+  height: 1.5rem;
+  border: 2px solid var(--bordure);
+  border-radius: 999px;
+  background: var(--surface);
+}
+.bascule-curseur {
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 1rem;
+  height: 1rem;
+  border-radius: 50%;
+  background: var(--texte-secondaire);
+}
+.bascule[aria-checked='true'] .bascule-piste { background: var(--accent); border-color: var(--accent); }
+.bascule[aria-checked='true'] .bascule-curseur { transform: translateX(1.25rem); background: var(--sur-accent); }
+@media (prefers-reduced-motion: no-preference) {
+  .bascule-curseur { transition: transform 150ms; }
+}
+
+/* Diagrammes à barres : texte en HTML (lisible, zoomable), barres en SVG décoratif */
+.diagramme { margin: 0 0 var(--e-6); padding: var(--e-3) var(--e-4); background: var(--surface); border: 1px solid var(--bordure); border-radius: var(--rayon-carte); }
+.diagramme figcaption { font-weight: 700; margin-bottom: var(--e-3); }
+.barres { list-style: none; margin: 0; padding: 0; display: grid; gap: var(--e-3); }
+.barres li { display: grid; grid-template-columns: 1fr auto; gap: var(--e-1) var(--e-4); font-size: var(--t-sm); }
+.barre { grid-column: 1 / -1; width: 100%; height: 0.75rem; }
+.barre-piste { fill: color-mix(in srgb, var(--bordure) 35%, transparent); }
+.barre-remplie { fill: var(--accent); }
+.barre-valeur { font-variant-numeric: tabular-nums; white-space: nowrap; font-weight: 600; }

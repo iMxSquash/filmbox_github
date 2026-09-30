@@ -3,6 +3,7 @@ import { Tableau } from '@/components/Tableau'
 import { acteurs, chemin, inaccessibles, plusEloignes } from '@/lib/db/personnes'
 import { identifiant } from '@/lib/params'
 import { LienPersonne } from '@/components/Liens'
+import { pluriel } from '@/lib/format'
 
 export const metadata: Metadata = { title: 'Le nombre de Bacon' }
 
@@ -55,6 +56,7 @@ export default async function PageBacon({ searchParams }: { searchParams: Promis
         <h2 id="titre-eloignes">Les acteurs les plus éloignés</h2>
         <Tableau
           legende="Nombre de Bacon, du plus éloigné au plus proche"
+          diagramme={{ valeur: (l) => l.nombre_de_bacon, max: 4, format: (n) => pluriel(n, 'degré') }}
           lignes={eloignes}
           cle={(l) => l.id}
           colonnes={[

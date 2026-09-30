@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import { deconnecter } from '@/app/connexion/actions'
 import { NavLien } from '@/components/NavLien'
+import { SwitchAffichage } from '@/components/SwitchAffichage'
 import { getSession } from '@/lib/session'
 import { LienMembre } from '@/components/Liens'
 
@@ -45,6 +46,7 @@ export async function EnTete() {
           </ul>
         </nav>
         <div className="compte">
+          <SwitchAffichage />
           {session ? (
             <>
               <span>

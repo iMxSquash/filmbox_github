@@ -87,6 +87,8 @@ Longueur de ligne du texte courant : 65 caractères max (`max-width: 65ch`). Un 
 | **Tableau de données** | `<caption>`, `<th scope>`, chiffres alignés à droite en `tabular-nums`. Les lignes de total (ROLLUP) sont en gras **et** libellées « Total ». |
 | **Message d'état** | Région `role="status"` (succès) ou `role="alert"` (erreur) ; texte clair repris des messages de la base (« Note invalide : 6 (de 0,5 à 5, par demi-point) »). |
 | **Pastille « privé »** | Icône cadenas + texte « Privé ». |
+| **Interrupteur Tableaux / Diagrammes** | Dans l'en-tête, visible sur toutes les pages. Bouton natif `role="switch"` + `aria-checked` : fonctionne sans JavaScript, s'active au clavier, l'état se lit par la position du curseur et l'annonce, pas par la couleur seule. Préférence dans un cookie lu côté serveur (pas de clignotement). |
+| **Diagramme à barres** | Équivalent d'un tableau à une seule valeur : `<figure>` + `<figcaption>`, liste de lignes « libellé — valeur » en vrai texte (zoomable, lisible par les lecteurs d'écran), barre en SVG décoratif (`aria-hidden`). Largeur en attribut SVG (la CSP interdit les `style` inline). Barre `--accent` sur piste atténuée. Un tableau à plusieurs séries, à valeurs négatives ou avec totaux reste un tableau. |
 | **Pagination** | `<nav aria-label="Pagination">`, liens « Précédent / Suivant » explicites. |
 
 ## 5. Iconographie et mouvement

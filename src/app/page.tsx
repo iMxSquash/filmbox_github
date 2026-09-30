@@ -1,6 +1,7 @@
 import { Note } from '@/components/Note'
 import { Tableau } from '@/components/Tableau'
 import { mieuxNotes, tendances } from '@/lib/db/films'
+import { pluriel, surCinq } from '@/lib/format'
 import { getSession } from '@/lib/session'
 import { LienFilm } from '@/components/Liens'
 
@@ -21,6 +22,7 @@ export default async function Accueil() {
           <h2 id="titre-tendances">Tendances</h2>
           <Tableau
             legende={`Les 5 films les plus vus en ${mois}`}
+            diagramme={{ valeur: (l) => l.vues, format: (n) => pluriel(n, 'visionnage') }}
             lignes={plusVus}
             cle={(l) => l.id}
             vide="Aucun visionnage ce mois-ci."
@@ -35,6 +37,7 @@ export default async function Accueil() {
           <h2 id="titre-meilleurs">Les mieux notés</h2>
           <Tableau
             legende="5 films les mieux notés (au moins 5 notes)"
+            diagramme={{ valeur: (l) => l.moyenne, max: 5, format: surCinq }}
             lignes={meilleurs}
             cle={(l) => l.id}
             vide="Pas encore assez de notes."

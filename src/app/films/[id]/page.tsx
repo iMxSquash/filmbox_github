@@ -8,7 +8,7 @@ import { Note } from '@/components/Note'
 import { Tableau } from '@/components/Tableau'
 import { compterUneVue, distribution, evolutionNotes, fiche, noteDuMembre } from '@/lib/db/films'
 import { episodes } from '@/lib/db/sagas'
-import { date, nombre, pluriel } from '@/lib/format'
+import { date, nombre, pluriel, surCinq } from '@/lib/format'
 import { identifiant } from '@/lib/params'
 import { getSession } from '@/lib/session'
 import { LienFilm, LienMembre, LienPersonne } from '@/components/Liens'
@@ -161,6 +161,13 @@ export default async function PageFilm({ params }: Props) {
         <h2 id="titre-evolution">Évolution de la note</h2>
         <Tableau
           legende="Chaque note reçue et la moyenne cumulée après cette note"
+          diagramme={{
+            valeur: (l) => l.moyenne_cumulee,
+            max: 5,
+            format: surCinq,
+            legende: 'Moyenne cumulée après chaque note',
+            libelle: (l) => `${date(l.note_le)} — ${l.pseudo}`,
+          }}
           lignes={evolution}
           cle={(l) => `${l.note_le}-${l.pseudo}`}
           vide="Ce film n'a pas encore été noté."

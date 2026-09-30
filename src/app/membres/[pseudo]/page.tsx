@@ -117,6 +117,7 @@ export default async function PageMembre({ params }: Props) {
         />
         <Tableau
           legende="Visionnages par mois et cumul"
+          diagramme={{ valeur: (l) => l.nb, format: (n) => pluriel(n, 'visionnage'), legende: 'Visionnages par mois' }}
           lignes={mois}
           cle={(l) => l.mois}
           colonnes={[

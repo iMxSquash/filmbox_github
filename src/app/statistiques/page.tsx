@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
 import { Tableau } from '@/components/Tableau'
 import { parGenre, parGenreEtTrimestre, scienceFictionParMembre } from '@/lib/db/statistiques'
-import { nombre } from '@/lib/format'
+import { nombre, pluriel } from '@/lib/format'
 import { getSession } from '@/lib/session'
 import { LienMembre } from '@/components/Liens'
 
@@ -23,6 +23,7 @@ export default async function PageStatistiques() {
         <h2 id="s-genres">Coups de cœur et déceptions par genre</h2>
         <Tableau
           legende="Notes par genre : coups de cœur (4,5 et plus) et déceptions (2,5 et moins)"
+          diagramme={{ valeur: (l) => l.nb_notes, format: (n) => pluriel(n, 'note'), legende: 'Nombre de notes par genre' }}
           lignes={genres}
           cle={(l) => l.genre}
           colonnes={[

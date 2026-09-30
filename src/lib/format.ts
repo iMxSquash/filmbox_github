@@ -9,6 +9,15 @@ export function date(iso: string): string {
   return new Date(`${iso}T00:00:00Z`).toLocaleDateString('fr-FR', { dateStyle: 'long', timeZone: 'UTC' })
 }
 
+// Note sur 5, avec son échelle : « 4,5 / 5 »
+export function surCinq(valeur: number): string {
+  return `${nombre(valeur)} / 5`
+}
+
+export function entier(valeur: number): string {
+  return valeur.toLocaleString('fr-FR')
+}
+
 // Jour courant au format ISO (AAAA-MM-JJ), pour borner les dates saisies.
 export function aujourdhui(): string {
   return new Date().toISOString().slice(0, 10)
